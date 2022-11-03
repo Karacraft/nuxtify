@@ -1,0 +1,15 @@
+{"items" :
+    [{
+      "title": "Dashboard",
+      "value": "/",
+      "props":{
+        "prependIcon": "mdi-view-dashboard"
+      }
+    },
+    {
+      "title": "Table",
+      "value": "/table",
+      "props":{"prependIcon": "mdi-table"}
+    }
+  ]
+}

@@ -20,6 +20,7 @@ module.exports = {
   rules: {
     quotes: ['error', 'single'],
     semi: ['error', 'never'],
-    'no-undef': ['off', 'allow']
+    'no-undef': ['off', 'allow'],
+    'vue/multi-word-component-names': ['off']
   }
 }
