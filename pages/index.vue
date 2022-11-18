@@ -11,7 +11,7 @@
       style="height:100vh"
     >
       <v-col
-        v-for="n in 4"
+        v-for="n in 15"
         :key="n"
         cols="3"
         sm="12"

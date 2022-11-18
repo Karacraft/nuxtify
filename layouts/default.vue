@@ -1,5 +1,6 @@
 <script setup>
 import { useTheme } from 'vuetify'
+import { loadTheme, saveTheme, themeExists } from '../js/utilities.js'
 import itemsList from '@/data/items.json'
 
 const drawer = ref(false)
@@ -8,20 +9,24 @@ const themeToggle = ref(false)
 
 // Vuetify Stuff
 const theme = useTheme()
+
+onMounted(() => {
+  if (themeExists) {
+    theme.global.name.value = loadTheme()
+  }
+})
+
 const toggleTheme = () => {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
-  themeToggle.value = !themeToggle.value
+  theme.global.name.value = theme.global.name.value === 'light' ? 'dark' : 'light'
+  saveTheme(theme.global.name.value)
 }
 </script>
 
 <template>
   <v-app>
-    <!-- <v-system-bar color="deep-purple darken-3"></v-system-bar> -->
-
-    <v-app-bar
-      color="accent"
-      prominent
-    >
+    <NuxtLoadingIndicator />
+    <v-app-bar>
+      <!-- <v-system-bar color="deep-purple darken-3"></v-system-bar> -->
       <v-app-bar-nav-icon
         variant="text"
         mobile:true
@@ -34,6 +39,18 @@ const toggleTheme = () => {
       </v-toolbar-title>
 
       <v-spacer />
+      <!-- Toggle button with Icons -->
+
+      <v-btn
+        @click="toggleTheme"
+      >
+        <v-icon v-if="themeToggle">
+          mdi-moon-waxing-crescent
+        </v-icon>
+        <v-icon v-else>
+          mdi-white-balance-sunny
+        </v-icon>
+      </v-btn>
 
       <!-- Hover Menu -->
       <v-menu
@@ -51,7 +68,7 @@ const toggleTheme = () => {
           <v-list-item
             v-for="item in items"
             :key="item.value"
-            :href="item.value"
+            :to="item.value"
             nuxt
           >
             <v-list-item-title>
@@ -60,27 +77,6 @@ const toggleTheme = () => {
           </v-list-item>
         </v-list>
       </v-menu>
-
-      <!-- Toggle button with Icons -->
-      <v-tooltip
-        text="Toggle Theme"
-        location="bottom"
-      >
-        <template #activator="{ props }">
-          <v-btn
-            v-bind="props"
-            @click="toggleTheme"
-          >
-            <v-icon v-if="themeToggle">
-              mdi-moon-waxing-crescent
-            </v-icon>
-            <v-icon v-else>
-              mdi-white-balance-sunny
-            </v-icon>
-          </v-btn>
-        </template>
-      </v-tooltip>
-      
     </v-app-bar>
 
     <v-navigation-drawer
@@ -97,7 +93,7 @@ const toggleTheme = () => {
       <v-list-item
         v-for="item in items"
         :key="item.value"
-        :href="item.value"
+        :to="item.value"
         nuxt
       >
         <v-list-item-title>
