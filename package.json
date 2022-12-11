@@ -8,18 +8,19 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "eslint": "^8.27.0",
+    "eslint": "^8.29.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.5.1",
+    "eslint-plugin-n": "^15.6.0",
     "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-vue": "^9.7.0",
+    "eslint-plugin-vue": "^9.8.0",
     "nuxt": "^3.0.0"
   },
   "dependencies": {
     "@mdi/font": "^7.0.96",
+    "@xata.io/client": "^0.21.3",
     "roboto-fontface": "^0.10.0",
-    "sass": "^1.56.1",
+    "sass": "^1.56.2",
     "vuetify": "^3.0.0",
     "webfontloader": "^1.6.28"
   }

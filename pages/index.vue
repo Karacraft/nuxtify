@@ -1,4 +1,10 @@
 <script setup>
+const users = await $fetch('/api/users',{
+  onResponseError: (err) => {
+    console.error(err)
+  }
+})
+// console.info(users)
 </script>
 
 <template>

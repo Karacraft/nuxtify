@@ -44,3 +44,9 @@ Configure nuxt.config.ts
     })
 
     Build & Enjoy
+
+
+### [XATA CLI & CLIENT](https://xata.io)  
+    
+    npm i --location=global @xata.io/cli
+    npm install @xata.io/client

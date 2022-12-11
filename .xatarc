@@ -1,0 +1,7 @@
+{
+  "databaseURL": "https://Karacraft-s-workspace-6ushdu.us-east-1.xata.sh/db/test",
+  "codegen": {
+    "output": "src/xata.js",
+    "moduleType": "esm"
+  }
+}
