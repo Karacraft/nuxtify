@@ -4,26 +4,88 @@ const name = ref('')
 const email = ref('')
 const bio = ref('')
 
-const users = await $fetch('/api/users')
+const users = ref([])
+const getUsers = async () => {
+  // const u = await $fetch('/api/users')
+  // console.info(u)
+  // users.value = u
+  console.info('Xata : ' , useRuntimeConfig().public.xataApiKey)
+  const options = {
+    method: 'POST',
+    headers: {Authorization: `Bearer ${useRuntimeConfig().public.xataApiKey}`, 'Content-Type': 'application/json'},
+    body: '{"page":{"size":15}}'
+  };
 
+fetch('https://karacraft-s-workspace-6ushdu.us-east-1.xata.sh/db/test:main/tables/Users/query', options)
+  .then(response => response.json())
+  .then(response => {
+    console.log(response)
+    users.value = response.records
+  })
+  .catch(err => console.error(err));
+
+}
 //  How to convert formData to JSON
-const formData = new FormData()
-formData.append('one','isworking')
-formData.append('two','isworking2')
-var obj = {}
-formData.forEach((value,key)=>{ obj[key] = value})
-console.info(JSON.stringify(obj))
+// const formData = new FormData()
+// formData.append('one','isworking')
+// formData.append('two','isworking2')
+// var obj = {}
+// formData.forEach((value,key)=>{ obj[key] = value})
+// console.info(JSON.stringify(obj))
 
 // console.info(JSON.stringify(formData))
 const addUser = async () => {
-  const d = await useFetch('/api/user',{
-    method:'POST',
-    headers:{
-      'Content-Type': 'application/json'
-    },
-    body:{name:name.value,email:email.value,bio:bio.value}
+  // const d = await useFetch('/api/user',{
+  //   method:'POST',
+  //   headers:{
+  //     'Content-Type': 'application/json'
+  //   },
+  //   body:{name:name.value,email:email.value,bio:bio.value}
+  // })
+
+  const options = {
+  method: 'POST',
+  headers: {Authorization: `Bearer ${useRuntimeConfig().public.xataApiKey}`, 'Content-Type': 'application/json'},
+  body: {"name": name.value,"email":email.value,"bio":bio.value}
+};
+
+fetch('https://karacraft-s-workspace-6ushdu.us-east-1.xata.sh/db/test:main/tables/Users/data?columns=id', options)
+  .then(response => response.json())
+  .then(response => {
+    console.log(response)
+    getUsers()
   })
+  .catch(err => console.error(err));
+
 }
+
+const deleteUser = async (delId) => {
+  // const d = await useFetch('/api/user',{
+  //   method:'DELETE',
+  //   headers:{
+  //     'Content-Type': 'application/json'
+  //   },
+  //   body:{id:delId}
+  // })
+  const options = {
+  method: 'DELETE',
+  headers: {Authorization: `Bearer ${useRuntimeConfig().public.xataApiKey}`, 'Content-Type': 'application/json'}
+};
+
+fetch(`https://karacraft-s-workspace-6ushdu.us-east-1.xata.sh/db/test:main/tables/Users/data/${delId}?columns=id`, options)
+  .then(response => response.json())
+  .then(response =>{ 
+    console.log(response)
+    getUsers()
+  })
+  .catch(err => console.error(err));
+
+  getUsers()
+}
+
+onMounted(() => {
+  getUsers()
+})
 </script>
 
 <template>
@@ -56,6 +118,7 @@ const addUser = async () => {
             <th class="text-left">
               Bio
             </th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -67,6 +130,9 @@ const addUser = async () => {
             <td>{{ user.name }}</td>
             <td>{{ user.email }}</td>
             <td>{{ user.bio }}</td>
+            <td>
+              <v-btn @click="deleteUser(user.id)">del</v-btn>
+            </td>
           </tr>
         </tbody>
         </v-table>

@@ -23,7 +23,9 @@ export default defineNuxtConfig({
   // https://nuxt.com/docs/getting-started/deployment#client-side-only-rendering for SSG
   // ssr: false,
   runtimeConfig: {
-    appXataApiKey:'',
-    xataApiKey:''
+    appXataApiKey:process.env.XATA_API_KEY,
+    public:{
+      xataApiKey:process.env.XATA_API_KEY
+    }
   }
 })
