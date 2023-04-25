@@ -2,6 +2,8 @@
 [Nuxt3](https://v3.nuxtjs.org/)
 [Vuetify](https://next.vuetifyjs.com/en/)  
 [Nuxt & Vuetify](https://codybontecou.com/how-to-use-vuetify-with-nuxt-3.html)  
+Requires  
+XATA_API_KEY= in .env  
 
 Install Nuxt3
 
